@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cartão Digital do Corretor — Praia Digital</title>
+<meta name="description" content="Crie seu cartão de visitas digital com link direto para WhatsApp — compartilhe por QR ou link.">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,sans-serif}
+  body{background:#f0f9ff;color:#0f172a;min-height:100vh}
+  header{background:linear-gradient(135deg,#0077B6,#00B4D8);color:#fff;padding:1rem 1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem}
+  header a{color:#fff;text-decoration:none;font-weight:700}.logo{font-size:1.2rem}
+  main{max-width:680px;margin:2rem auto;padding:0 1rem;display:grid;gap:1.5rem;grid-template-columns:1fr}
+  @media(min-width:800px){main{grid-template-columns:1fr 1fr}}
+  .card{background:#fff;border-radius:16px;padding:1.75rem;box-shadow:0 4px 24px rgba(0,60,100,.08)}
+  h1{font-size:1.4rem;color:#0077B6}.sub{color:#64748b;margin:.3rem 0 1.2rem;font-size:.92rem}
+  label{display:block;font-weight:600;font-size:.85rem;margin:.8rem 0 .3rem}
+  input{width:100%;padding:.7rem;border:1px solid #cbd5e1;border-radius:10px;font-size:1rem}
+  .prev{background:linear-gradient(135deg,#0077B6,#00B4D8);border-radius:20px;padding:2rem 1.5rem;color:#fff;text-align:center;align-self:start;position:sticky;top:1rem}
+  .prev .avatar{width:72px;height:72px;border-radius:50%;background:#fff;color:#0077B6;font-size:1.8rem;font-weight:800;display:inline-flex;align-items:center;justify-content:center;margin-bottom:.8rem}
+  .prev h2{font-size:1.3rem}.prev p{opacity:.9;font-size:.9rem;margin:.2rem 0}
+  .prev .wa{display:inline-block;margin-top:1rem;background:#25d366;color:#fff;padding:.7rem 1.4rem;border-radius:999px;text-decoration:none;font-weight:800;font-size:.95rem}
+  .dica{background:#fff;border-radius:16px;padding:1.25rem;box-shadow:0 4px 24px rgba(0,60,100,.08);font-size:.9rem;grid-column:1/-1}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="https://praia.digital/">🏖️ Praia Digital</a>
+  <a href="https://praia.digital/portal-corretores">← Portal do Corretor</a>
+</header>
+<main>
+  <div class="card">
+    <h1>💳 Cartão Digital do Corretor</h1>
+    <p class="sub">Preencha e veja a prévia ao lado. Compartilhe o link ou mostre na tela.</p>
+    <label>Seu nome</label><input id="nome" value="Ana Lima" oninput="upd()">
+    <label>CRECI</label><input id="creci" value="CRECI-SP 123.456" oninput="upd()">
+    <label>Especialidade</label><input id="esp" value="Imóveis no litoral · Praia Grande" oninput="upd()">
+    <label>WhatsApp (só números, com DDD)</label><input id="wa" value="5511954346288" oninput="upd()">
+  </div>
+  <div class="prev">
+    <div class="avatar" id="pIni">AL</div>
+    <h2 id="pNome">Ana Lima</h2>
+    <p id="pCreci">CRECI-SP 123.456</p>
+    <p id="pEsp">Imóveis no litoral · Praia Grande</p>
+    <a class="wa" id="pWa" href="#" target="_blank" rel="noopener">💬 Chamar no WhatsApp</a>
+  </div>
+  <div class="dica">💡 <b>Como usar:</b> salve esta página com seus dados nos favoritos do celular e mostre o cartão em visitas e eventos. Cliente toca no botão e cai direto no seu WhatsApp. Mais ferramentas no <a href="https://praia.digital/portal-corretores" style="color:#0077B6;font-weight:700">Portal do Corretor</a>.</div>
+</main>
+<script>
+function upd(){
+  var n=document.getElementById('nome').value||'Seu Nome';
+  var ini=n.trim().split(/\s+/).map(function(w){return w[0]}).slice(0,2).join('').toUpperCase();
+  document.getElementById('pIni').textContent=ini;
+  document.getElementById('pNome').textContent=n;
+  document.getElementById('pCreci').textContent=document.getElementById('creci').value;
+  document.getElementById('pEsp').textContent=document.getElementById('esp').value;
+  document.getElementById('pWa').href='https://wa.me/'+document.getElementById('wa').value.replace(/\D/g,'');
+}
+upd();
+</script>
+</body>
+</html>
