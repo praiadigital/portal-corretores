@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gerador de Proposta de Compra — Praia Digital</title>
+<meta name="description" content="Crie uma proposta formal de compra de imóvel em segundos, pronta para enviar ao proprietário.">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,sans-serif}
+  body{background:#f0f9ff;color:#0f172a;min-height:100vh}
+  header{background:linear-gradient(135deg,#0077B6,#00B4D8);color:#fff;padding:1rem 1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem}
+  header a{color:#fff;text-decoration:none;font-weight:700}.logo{font-size:1.2rem}
+  main{max-width:680px;margin:2rem auto;padding:0 1rem}
+  .card{background:#fff;border-radius:16px;padding:1.75rem;box-shadow:0 4px 24px rgba(0,60,100,.08)}
+  h1{font-size:1.5rem;color:#0077B6}.sub{color:#64748b;margin:.3rem 0 1.2rem;font-size:.95rem}
+  label{display:block;font-weight:600;font-size:.85rem;margin:.9rem 0 .3rem}
+  input,select{width:100%;padding:.7rem;border:1px solid #cbd5e1;border-radius:10px;font-size:1rem}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:0 1rem}
+  @media(max-width:600px){.grid{grid-template-columns:1fr}}
+  button{width:100%;margin-top:1.3rem;padding:.9rem;border:0;border-radius:12px;background:#0077B6;color:#fff;font-weight:800;font-size:1rem;cursor:pointer}
+  #out{display:none;margin-top:1.2rem;background:#f8fafc;border:1px solid #cbd5e1;border-radius:12px;padding:1.25rem;white-space:pre-wrap;font-size:.9rem;line-height:1.7}
+  .copy{margin-top:.75rem;padding:.6rem 1rem;border:1px solid #0077B6;background:#fff;color:#0077B6;border-radius:10px;font-weight:700;cursor:pointer;display:none}
+  .dica{margin-top:1rem;background:#fef9c3;border:1px solid #fde047;border-radius:12px;padding:1rem;font-size:.85rem}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="https://praia.digital/">🏖️ Praia Digital</a>
+  <a href="https://praia.digital/portal-corretores">← Portal do Corretor</a>
+</header>
+<main>
+  <div class="card">
+    <h1>📝 Gerador de Proposta de Compra</h1>
+    <p class="sub">Formalize a oferta do seu cliente em formato profissional.</p>
+    <div class="grid">
+      <div><label>Comprador(a)</label><input id="comp" value="Carlos Souza"></div>
+      <div><label>Corretor(a)</label><input id="corr" value="Ana Lima — CRECI 12345"></div>
+    </div>
+    <label>Imóvel (endereço/descrição)</label>
+    <input id="imovel" value="Apto 2 dorm., Av. da Praia 1000, Praia Grande/SP">
+    <div class="grid">
+      <div><label>Valor proposto (R$)</label><input type="number" id="valor" value="480000"></div>
+      <div><label>Sinal/entrada (R$)</label><input type="number" id="sinal" value="96000"></div>
+      <div><label>Forma de pagamento</label>
+        <select id="pag"><option>Financiamento bancário</option><option>À vista</option><option>FGTS + financiamento</option><option>Consórcio contemplado</option></select></div>
+      <div><label>Validade da proposta</label>
+        <select id="validade"><option>48 horas</option><option>5 dias</option><option>7 dias</option></select></div>
+    </div>
+    <button onclick="gerar()">Gerar proposta</button>
+    <div id="out"></div>
+    <button class="copy" id="cp" onclick="navigator.clipboard.writeText(document.getElementById('out').textContent);this.textContent='✅ Copiado!'">📋 Copiar proposta</button>
+    <div class="dica">⚠️ Documento de referência — propostas formais devem seguir as orientações jurídicas da imobiliária. Planeje suas metas no <a href="https://praia.digital/portal-corretores/planejador-metas/" style="color:#854d0e;font-weight:700">Planejador de Metas</a>.</div>
+  </div>
+</main>
+<script>
+var fmt=function(n){return n.toLocaleString('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:2})};
+function gerar(){
+  var g=function(id){return document.getElementById(id).value};
+  var hoje=new Date().toLocaleDateString('pt-BR');
+  var txt='PROPOSTA DE COMPRA DE IMÓVEL\nData: '+hoje+'\n\n'+
+  'Comprador(a): '+g('comp')+'\n'+
+  'Corretor(a) responsável: '+g('corr')+'\n\n'+
+  'IMÓVEL OBJETO DA PROPOSTA\n'+g('imovel')+'\n\n'+
+  'CONDIÇÕES DA OFERTA\n'+
+  '• Valor proposto: '+fmt(parseFloat(g('valor'))||0)+'\n'+
+  '• Sinal/entrada: '+fmt(parseFloat(g('sinal'))||0)+'\n'+
+  '• Forma de pagamento: '+g('pag')+'\n'+
+  '• Validade desta proposta: '+g('validade')+'\n\n'+
+  'DECLARAÇÕES\n'+
+  'O(a) comprador(a) declara ter visitado o imóvel e conhecer suas condições gerais. Esta proposta não constitui contrato de compra e venda, estando sujeita à aceitação do(s) proprietário(s) e à aprovação de crédito, quando aplicável.\n\n'+
+  '_____________________________\n'+g('comp')+'\nComprador(a)\n\n_____________________________\n'+g('corr')+'\nCorretor(a)';
+  document.getElementById('out').textContent=txt;
+  document.getElementById('out').style.display='block';
+  document.getElementById('cp').style.display='inline-block';
+}
+</script>
+</body>
+</html>
