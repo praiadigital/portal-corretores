@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Planejador de Metas do Corretor — Praia Digital</title>
+<meta name="description" content="Transforme sua meta anual de comissões em plano de ação: quantas vendas, visitas e leads por mês.">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,sans-serif}
+  body{background:#f0f9ff;color:#0f172a;min-height:100vh}
+  header{background:linear-gradient(135deg,#0077B6,#00B4D8);color:#fff;padding:1rem 1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem}
+  header a{color:#fff;text-decoration:none;font-weight:700}.logo{font-size:1.2rem}
+  main{max-width:680px;margin:2rem auto;padding:0 1rem}
+  .card{background:#fff;border-radius:16px;padding:1.75rem;box-shadow:0 4px 24px rgba(0,60,100,.08)}
+  h1{font-size:1.5rem;color:#0077B6}.sub{color:#64748b;margin:.3rem 0 1.2rem;font-size:.95rem}
+  label{display:block;font-weight:600;font-size:.85rem;margin:.9rem 0 .3rem}
+  input{width:100%;padding:.7rem;border:1px solid #cbd5e1;border-radius:10px;font-size:1rem}
+  button{width:100%;margin-top:1.3rem;padding:.9rem;border:0;border-radius:12px;background:#0077B6;color:#fff;font-weight:800;font-size:1rem;cursor:pointer}
+  #out{display:none;margin-top:1.3rem}
+  .funil{display:flex;flex-direction:column;gap:.5rem;margin-top:.8rem}
+  .etapa{border-radius:10px;padding:.8rem 1rem;color:#fff;font-weight:600;display:flex;justify-content:space-between;font-size:.92rem}
+  .dica{margin-top:1.2rem;background:#ecfeff;border:1px solid #67e8f9;border-radius:12px;padding:1rem;font-size:.9rem}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="https://praia.digital/">🏖️ Praia Digital</a>
+  <a href="https://praia.digital/portal-corretores">← Portal do Corretor</a>
+</header>
+<main>
+  <div class="card">
+    <h1>🎯 Planejador de Metas</h1>
+    <p class="sub">Da meta anual ao plano diário: engenharia reversa do funil de vendas.</p>
+    <label>Meta de comissões no ano (R$)</label><input type="number" id="meta" value="300000" step="50000">
+    <label>Comissão média por venda (R$)</label><input type="number" id="comissao" value="25000" step="5000">
+    <label>Sua taxa de conversão (lead → venda, %)</label><input type="number" id="conv" value="2" step="0.5">
+    <button onclick="plan()">Montar meu plano</button>
+    <div id="out"></div>
+    <div class="dica">💬 Scripts prontos no <a href="https://praia.digital/portal-corretores" style="color:#0077B6;font-weight:700">Portal do Corretor</a> · 🤖 Automatize o atendimento com o <a href="https://praia.digital/hermes-agents/roi-ia/" style="color:#0077B6;font-weight:700">ROI de IA</a></div>
+  </div>
+</main>
+<script>
+var fmt=function(n){return n.toLocaleString('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:0})};
+function plan(){
+  var meta=parseFloat(document.getElementById('meta').value)||0;
+  var com=parseFloat(document.getElementById('comissao').value)||1;
+  var conv=parseFloat(document.getElementById('conv').value)/100||0.02;
+  var vendasAno=Math.ceil(meta/com), vendasMes=vendasAno/12;
+  var leadsMes=vendasMes/conv;
+  var visitasMes=leadsMes*0.3;
+  var cores=['#0c4a6e','#0369a1','#0284c7','#0ea5e9'];
+  var etapas=[
+    ['Leads necessários/mês', Math.ceil(leadsMes)],
+    ['Visitas agendadas/mês', Math.ceil(visitasMes)],
+    ['Vendas/mês', vendasMes.toFixed(1)],
+    ['Comissões/mês', fmt(meta/12)]
+  ];
+  var max=etapas[0][1];
+  document.getElementById('out').innerHTML='<div class="funil">'+etapas.map(function(e,i){
+    return '<div class="etapa" style="background:'+cores[i]+';width:100%"><span>'+e[0]+'</span><b>'+e[1]+'</b></div>';
+  }).join('')+'</div>'+
+  '<p style="margin-top:1rem;font-size:.95rem">📅 Resumo: <b>'+vendasAno+' vendas no ano</b> · ~'+Math.ceil(leadsMes/22)+' leads por dia útil. Meta diária clara = meta anual alcançável.</p>';
+  document.getElementById('out').style.display='block';
+}
+</script>
+</body>
+</html>
