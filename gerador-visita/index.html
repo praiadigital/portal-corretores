@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agendador de Visitas — Praia Digital</title>
+<meta name="description" content="Gere a confirmação de visita perfeita para WhatsApp: data, endereço, checklist do cliente e lembrete.">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,sans-serif}
+  body{background:#f0f9ff;color:#0f172a;min-height:100vh}
+  header{background:linear-gradient(135deg,#0077B6,#00B4D8);color:#fff;padding:1rem 1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem}
+  header a{color:#fff;text-decoration:none;font-weight:700}.logo{font-size:1.2rem}
+  main{max-width:660px;margin:2rem auto;padding:0 1rem}
+  .card{background:#fff;border-radius:16px;padding:1.75rem;box-shadow:0 4px 24px rgba(0,60,100,.08)}
+  h1{font-size:1.5rem;color:#0077B6}.sub{color:#64748b;margin:.3rem 0 1.2rem;font-size:.95rem}
+  label{display:block;font-weight:600;font-size:.85rem;margin:.9rem 0 .3rem}
+  input{width:100%;padding:.7rem;border:1px solid #cbd5e1;border-radius:10px;font-size:1rem}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:0 1rem}
+  @media(max-width:600px){.grid{grid-template-columns:1fr}}
+  button{width:100%;margin-top:1.3rem;padding:.9rem;border:0;border-radius:12px;background:#0077B6;color:#fff;font-weight:800;font-size:1rem;cursor:pointer}
+  #out{display:none;margin-top:1.2rem;background:#f8fafc;border:1px solid #cbd5e1;border-radius:12px;padding:1.25rem;white-space:pre-wrap;font-size:.9rem;line-height:1.7}
+  .copy{margin-top:.75rem;padding:.6rem 1rem;border:1px solid #0077B6;background:#fff;color:#0077B6;border-radius:10px;font-weight:700;cursor:pointer;display:none}
+  .dica{margin-top:1rem;background:#ecfeff;border:1px solid #67e8f9;border-radius:12px;padding:1rem;font-size:.9rem}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="https://praia.digital/">🏖️ Praia Digital</a>
+  <a href="https://praia.digital/portal-corretores">← Portal do Corretor</a>
+</header>
+<main>
+  <div class="card">
+    <h1>📅 Confirmação de Visita</h1>
+    <p class="sub">Visita confirmada por escrito reduz no-show em até 50%. Gere a mensagem completa:</p>
+    <div class="grid">
+      <div><label>Cliente</label><input id="cliente" value="Carlos"></div>
+      <div><label>Seu nome</label><input id="corretor" value="Ana Lima"></div>
+      <div><label>Data</label><input id="data" value="Sábado, 20/09"></div>
+      <div><label>Horário</label><input id="hora" value="10h"></div>
+    </div>
+    <label>Imóvel / ponto de encontro</label>
+    <input id="local" value="Apto 82, Av. da Praia 1000 — Praia Grande (portaria)">
+    <button onclick="gerar()">Gerar confirmação</button>
+    <div id="out"></div>
+    <button class="copy" id="cp" onclick="navigator.clipboard.writeText(document.getElementById('out').textContent);this.textContent='✅ Copiado!'">📋 Copiar mensagem</button>
+    <div class="dica">📝 Depois da visita, formalize com o <a href="https://praia.digital/portal-corretores/gerador-proposta/" style="color:#0077B6;font-weight:700">Gerador de Proposta</a> · 💳 <a href="https://praia.digital/portal-corretores/cartao-digital/" style="color:#0077B6;font-weight:700">Cartão Digital</a></div>
+  </div>
+</main>
+<script>
+function gerar(){
+  var g=function(id){return document.getElementById(id).value};
+  var txt='📅 *VISITA CONFIRMADA*\n\nOlá, '+g('cliente')+'! Confirmando nossa visita:\n\n'+
+  '📍 Local: '+g('local')+'\n🗓️ Data: '+g('data')+'\n🕐 Horário: '+g('hora')+'\n\n'+
+  '✅ *Para aproveitar melhor a visita, traga:*\n• Documento com foto\n• Comprovante de renda (se quiser já simular)\n• Lista de dúvidas — eu adoro responder!\n\n'+
+  'Qualquer imprevisto, me avise por aqui que reagendamos. Até lá! 😊\n\n— '+g('corretor')+' | Praia Digital';
+  document.getElementById('out').textContent=txt;
+  document.getElementById('out').style.display='block';
+  document.getElementById('cp').style.display='inline-block';
+}
+</script>
+</body>
+</html>
